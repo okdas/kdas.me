@@ -1,0 +1,30 @@
+baseurl = "http://kdas.me/"
+languageCode = "en-us"
+title = "Some public notes"
+theme = "casper"
+paginate = 5
+DisqusShortname = "kdas"
+canonifyurls = true
+
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+  description = "Things I use sometimes that may be helpful."
+  author = "Dmitry K."
+  githubName = 'okdas'
+  twitterName = 'kdasme'
+
+[[menu.main]]
+  name = "Notes"
+  weight = -120
+  identifier = "notes"
+  url = "/"
+
+[[menu.main]]
+  name = "Links"
+  weight = -110
+  identifier = "links"
+  url = "/links"
