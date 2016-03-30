@@ -1,4 +1,4 @@
-baseurl = "http://kdas.me/"
+baseurl = "https://kdas.me/"
 languageCode = "en-us"
 title = "Some public notes"
 theme = "casper"
@@ -12,6 +12,7 @@ canonifyurls = true
   tag = "tags"
 
 [params]
+  # cover = "media/cover.jpeg"
   description = "Things I use sometimes that may be helpful."
   author = "Dmitry K."
   githubName = 'okdas'
