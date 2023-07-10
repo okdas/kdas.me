@@ -12,28 +12,25 @@ categories = [
 aliases = [ '/ovh-firewall-howto/' ]
 +++
 
-*The article not finished yet..*
+On OVH.com services, we have an interesting feature that is not currently documented (although I hope it will be soon). It is a Firewall. This feature was launched in 2014 on the brand new managerV6 (control panel), which is now the default.
 
-On OVH.com services we have an interesting feature, which actually not documented at all (yet, I hope). It is a Firewall. It was launched in 2014 on brand new managerV6 (control panel), which is now default.
+The Firewall activates automatically during every DDoS attack and it cannot be disabled until the attack is stopped. **That's why it's so important to keep firewall rules up to date!** By default, there are no rules set, so any connections can be established.
 
-Firewall turns on automatically on every DDoS attack and it is not possible to shut it down until attack will be stopped. **That is why so important to keep firewall rules actual!** By default, you have no any rules, so any connections can be established.
-
-Huge feature (or bug): those rules will not affect connections inside OVH network. I'm sure that is not a bug because Firewall is a part of their VAC (Anti-DDoS solution) — Firewall Network on scheme.
+A significant characteristic (or bug) is that these rules do not affect connections within the OVH network. I'm confident this isn't a bug because the Firewall is part of their VAC (Anti-DDoS solution) — the Firewall Network on the scheme.
 
 {{< figure src="/media/ovh-firewall-howto/vac-inside.jpg" >}}
 
-Firewall is really useful against DDoS attacks. For example, on regular web server we only need 80 and 443 ports to be accessible from the internet. Also we need rules for outgoing connections (for DNS, mail, system updates, etc..).
+The Firewall is incredibly useful in defending against DDoS attacks. For instance, on a regular web server, we only need ports 80 and 443 to be accessible from the internet. We also need rules for outgoing connections (for DNS, mail, system updates, etc.).
 
-Another one unobvious feature: you can only have 20 rules. Each rule have its own priority. **Higher priority on this table have actually lower priority in Firewall.** That is the really common mistake.
+Another non-obvious feature is that you can only have 20 rules. Each rule has its own priority. **Higher priority on this table actually means lower priority in the Firewall.** This is a really common mistake.
 
-I have a best practice to refuse ALL IPv4 connections and allow only which I need — usually only 80 and 443. And here is example:
+My best practice is to refuse ALL IPv4 connections and allow only those that I need — usually only 80 and 443. Here is an example:
 
 {{< figure src="/media/ovh-firewall-howto/rules.png" >}}
 
-We have to reject ALL IPv4 traffic on rule 19 (lower priority) and allow 80 and 443 ports for HTTP and HTTPS respectively. We also want to be able to upgrade the system send e-mails, etc., so we need outgoing TCP connections to be allowed (rule #13).
+We have to reject ALL IPv4 traffic on rule 19 (lower priority) and allow ports 80 and 443 for HTTP and HTTPS respectively. We also want to be able to upgrade the system, send emails, etc., so we need outgoing TCP connections to be allowed (rule #13).
 
-For DNS I'm using OVH's internal nameserver (213.186.33.99), which is available for us because it is inside OVH network.
+For DNS, I'm using OVH's internal nameserver (213.186.33.99), which is available to us because it's inside the OVH network.
 
-That's it, now I'm safe from any DDoS activity, except http and tcp/syn flood. HTTP flood needs to be filtered on application layer or on a reverse-proxy (usually, I'm using Nginx to handle with "bad" IPs). TCP flood usually handles great by OVH VAC.
+That's it, now I'm safe from any DDoS activity, except for HTTP and tcp/syn flood. HTTP flood needs to be filtered at the application layer or on a reverse-proxy (usually, I use Nginx to deal with "bad" IPs). TCP flood is usually well-handled by OVH's VAC.
 
-More examples and explanations will be here later.
