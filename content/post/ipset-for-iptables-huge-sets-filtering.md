@@ -10,18 +10,19 @@ title = "ipset for iptables huge sets filtering"
 aliases = [ '/ipset-for-iptables-huge-sets-filtering/' ]
 +++
 
-Install some stuff:
+Start by installing the necessary software:
 `apt-get install zip unzip ipset`
 
-Create hash set:
+Next, create a hash set:
 `ipset create hash_block hash:net`
 
-Block tcp connection:
+To block TCP connections, use the following command:
 
 `iptables -I INPUT -p tcp --dport 25565 -m set --match-set sfs_block src -j DROP`
 
 
-May be useful with proxy-lists (sample mechanism works on our hosting), example with StopForumSpam list:
+This might be useful with proxy lists (a similar mechanism works on flyspring.net), for example, with the StopForumSpam list:
+
 ```
 ipset destroy temporably
 ipset create hash_block hash:net
