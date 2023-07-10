@@ -35,11 +35,11 @@ params:
   # dateFormat: "2006-01-02"
   paginationSinglePost: true
   style: light-without-switcher
-  mainSections: [ "notes" ] # which sections should be on index/main page
-  sectionsWithFullContentOnListPage: [ "notes" ] # for which sections content should be displayed on list pages
+  mainSections: [ "post" ] # which sections should be on index/main page
+  sectionsWithFullContentOnListPage: [ "post" ] # for which sections content should be displayed on list pages
   readMore: false # show read more button
   readNextPosts: 5  # show 5 related posts, 0 by default
-  disableSummary: false
+  disableSummary: true
   toc: true # display Table of Contents
   tocWordCount: 300 # ...when a post is longer than 300 words
   copyCodeButton: true # true by default
@@ -78,6 +78,8 @@ params:
   social:
   - id: github
     name: okdas
+  - id: twitter
+    name: kdasme
 #  - id: hugo
 #    url: "https://gohugo.io/"
 #    icon: "hugo"
