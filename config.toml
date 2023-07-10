@@ -1,6 +1,6 @@
 baseurl = "https://kdas.me/"
 languageCode = "en-us"
-title = "Some public notes"
+title = "Tech insights and tips"
 theme = "casper"
 paginate = 5
 DisqusShortname = "kdas"
@@ -13,7 +13,7 @@ canonifyurls = true
 
 [params]
   # cover = "media/cover.jpeg"
-  description = "Things I use sometimes that may be helpful."
+  description = "Sharing insights, tips, and solutions that I find useful in my professional journey"
   author = "Dmitry K."
   githubName = 'okdas'
   twitterName = 'kdasme'
