@@ -5,8 +5,6 @@ title = "Links"
 
 +++
 
-[Gitlab](https://git.flydev.net) (closed sources, team-shared)
-
-[Gogs](https://kdas.me/git) (closed sources, personal)
-
 [Github](https://github.com/okdas)
+[X](https://x.com/kDasme)
+[Telegram](https://t.me/okdas)
