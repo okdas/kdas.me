@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>iptables on Tech insights and tips</title><link>https://kdas.me/tags/iptables/</link><description>Tech insights and tips (iptables)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 10 Aug 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://kdas.me/tags/iptables/index.xml" rel="self" type="application/rss+xml"/><item><title>ipset for iptables huge sets filtering</title><link>https://kdas.me/post/ipset-for-iptables-huge-sets-filtering/</link><pubDate>Mon, 10 Aug 2015 00:00:00 +0000</pubDate><guid>https://kdas.me/post/ipset-for-iptables-huge-sets-filtering/</guid><description>&lt;p>Start by installing the necessary software:
+&lt;code>apt-get install zip unzip ipset&lt;/code>&lt;/p>
+&lt;p>Next, create a hash set:
+&lt;code>ipset create hash_block hash:net&lt;/code>&lt;/p>
+&lt;p>To block TCP connections, use the following command:&lt;/p>
+&lt;p>&lt;code>iptables -I INPUT -p tcp --dport 25565 -m set --match-set sfs_block src -j DROP&lt;/code>&lt;/p>
+&lt;p>This might be useful with proxy lists (a similar mechanism works on flyspring.net), for example, with the StopForumSpam list:&lt;/p>
+&lt;pre tabindex="0">&lt;code>ipset destroy temporably
+ipset create hash_block hash:net
+ipset create temporably hash:net
+wget -N http://flyspring.net/files/listed_ip_7.zip -P /tmp
+unzip /tmp/listed_ip_7.zip -d /tmp/
+sed &amp;#39;s:^:add tempset :&amp;#39; /tmp/listed_ip_7.txt &amp;gt; /tmp/listed_ip_7_importfile.txt
+ipset restore &amp;lt; /tmp/listed_ip_7_importfile.txt
+rm /tmp/listed_ip_7_importfile.txt /tmp/listed_ip_7.txt /tmp/listed_ip_7.zip
+ipset swap tempset hash_block
+&lt;/code>&lt;/pre></description></item></channel></rss>

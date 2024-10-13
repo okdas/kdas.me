@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OVH on Tech insights and tips</title><link>https://kdas.me/categories/ovh/</link><description>Tech insights and tips (OVH)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 15 Sep 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://kdas.me/categories/ovh/index.xml" rel="self" type="application/rss+xml"/><item><title>OVH Firewall HowTo</title><link>https://kdas.me/post/ovh-firewall-howto/</link><pubDate>Tue, 15 Sep 2015 00:00:00 +0000</pubDate><guid>https://kdas.me/post/ovh-firewall-howto/</guid><description>&lt;h1 id="ovh-firewall-a-comprehensive-guide" >OVH Firewall: A Comprehensive Guide
+&lt;span>
+&lt;a href="#ovh-firewall-a-comprehensive-guide">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;h2 id="introduction" >Introduction
+&lt;span>
+&lt;a href="#introduction">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>OVH.com services offer an intriguing feature that, as of this writing, lacks official documentation: the OVH Firewall. Launched in 2014 alongside the new managerV6 (control panel), this firewall has become an integral part of OVH&amp;rsquo;s security infrastructure.&lt;/p>
+&lt;h2 id="automatic-activation-during-ddos-attacks" >Automatic Activation During DDoS Attacks
+&lt;span>
+&lt;a href="#automatic-activation-during-ddos-attacks">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>One of the most crucial aspects of the OVH Firewall is its automatic activation during Distributed Denial of Service (DDoS) attacks. Once activated, the firewall cannot be disabled until the attack subsides. This automatic response mechanism underscores the critical importance of maintaining up-to-date firewall rules. By default, no rules are set, allowing all connections to be established.&lt;/p>
+&lt;h2 id="important-characteristics-and-limitations" >Important Characteristics and Limitations
+&lt;span>
+&lt;a href="#important-characteristics-and-limitations">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;h3 id="internal-network-exemption" >Internal Network Exemption
+&lt;span>
+&lt;a href="#internal-network-exemption">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>A notable characteristic is that these firewall rules do not affect connections within the OVH network. This behavior is intentional, as the Firewall is part of OVH&amp;rsquo;s VAC (Anti-DDoS solution), specifically the &amp;ldquo;Firewall Network&amp;rdquo; component in their architecture.&lt;/p>
+&lt;p>&lt;img src="https://kdas.me/media/ovh-firewall-howto/vac-inside.jpg" alt="VAC Architecture">&lt;/p>
+&lt;h3 id="rule-limit-and-priority" >Rule Limit and Priority
+&lt;span>
+&lt;a href="#rule-limit-and-priority">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Users should be aware of several key limitations:&lt;/p>
+&lt;ol>
+&lt;li>There is a maximum of 20 rules per firewall.&lt;/li>
+&lt;li>Each rule has its own priority, but the priority system is counterintuitive. &lt;strong>Higher numbers in the priority column actually indicate lower priority in the Firewall.&lt;/strong>&lt;/li>
+&lt;li>The firewall only blocks traffic from outside the OVH network. Internal OVH traffic can still reach your server on any port.&lt;/li>
+&lt;/ol>
+&lt;p>To illustrate the priority system: if you authorize TCP port 80 on priority 18 and then refuse all connections on priority 19, traffic will still flow on port 80. This is because the higher number (19) actually has a lower priority in the firewall&amp;rsquo;s logic. It&amp;rsquo;s almost as if the priority numbers should be reversed, which can be very confusing for users.&lt;/p>
+&lt;h2 id="best-practices" >Best Practices
+&lt;span>
+&lt;a href="#best-practices">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>For optimal security, it&amp;rsquo;s recommended to:&lt;/p>
+&lt;ol>
+&lt;li>Deny ALL IPv4 connections by default.&lt;/li>
+&lt;li>Allow only necessary incoming connections (e.g., ports 80 and 443 for a web server).&lt;/li>
+&lt;li>Configure rules for required outgoing connections (e.g., DNS, email, system updates).&lt;/li>
+&lt;/ol>
+&lt;p>Here&amp;rsquo;s an example of a well-configured ruleset:&lt;/p>
+&lt;p>&lt;img src="https://kdas.me/media/ovh-firewall-howto/rules.png" alt="Firewall Rules Example">&lt;/p>
+&lt;p>In this configuration:&lt;/p>
+&lt;ul>
+&lt;li>Rule 19 (lowest priority) rejects ALL IPv4 traffic.&lt;/li>
+&lt;li>Higher priority rules allow specific necessary traffic:
+&lt;ul>
+&lt;li>Ports 80 and 443 for HTTP and HTTPS&lt;/li>
+&lt;li>Outgoing TCP connections for system updates, email sending, etc. (rule #13)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>For DNS, this setup utilizes OVH&amp;rsquo;s internal nameserver (213.186.33.99), which is accessible because it&amp;rsquo;s within the OVH network.&lt;/p>
+&lt;h2 id="additional-security-measures" >Additional Security Measures
+&lt;span>
+&lt;a href="#additional-security-measures">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>It&amp;rsquo;s crucial to understand that the OVH Firewall is not sufficient for complete server security. Since it only blocks traffic from outside the OVH network, you must implement additional security measures:&lt;/p>
+&lt;ol>
+&lt;li>Use a server-level firewall (such as UFW - Uncomplicated Firewall) to protect against internal OVH network traffic.&lt;/li>
+&lt;li>Secure sensitive ports like SSH (22) using the server-level firewall and other best practices (key-based authentication, non-standard ports, etc.).&lt;/li>
+&lt;li>Regularly update and patch your server to address potential vulnerabilities.&lt;/li>
+&lt;/ol>
+&lt;h2 id="conclusion" >Conclusion
+&lt;span>
+&lt;a href="#conclusion">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>The OVH Firewall provides robust protection against DDoS attacks and external threats, but it&amp;rsquo;s just one layer of security. For comprehensive protection:&lt;/p>
+&lt;ol>
+&lt;li>Implement the OVH Firewall rules as described above.&lt;/li>
+&lt;li>Use a server-level firewall to guard against internal network threats.&lt;/li>
+&lt;li>Apply additional security measures for services like HTTP and SSH.&lt;/li>
+&lt;/ol>
+&lt;p>Remember, security is an ongoing process. Regularly review and update your firewall rules and security practices to ensure optimal protection for your OVH-hosted services.&lt;/p></description></item></channel></rss>
